@@ -3,29 +3,29 @@ package org.example;
 /**
  * A class that represents a linked list.
  *
- * @param <t> the type of elements in the linked list
+ * @param <T> the type of elements in the linked list
  */
-public class MyLinkedList<t> {
-    private Node<t> head;
-    private Node<t> tail;
+public class MyLinkedList<T> {
+    private Node<T> head;
+    private Node<T> tail;
     private int size;
 
     /**
      * A private inner class that represents a node in the linked list.
      *
-     * @param <t> the type of element in the node
+     * @param <T> the type of element in the node
      */
-    private static class Node<t> {
-        private t data;
-        private Node<t> previous;
-        private Node<t> next;
+    private static class Node<T> {
+        private T data;
+        private Node<T> previous;
+        private Node<T> next;
 
         /**
          * Constructs a node with the specified data.
          *
          * @param data the data for the node
          */
-        public Node(t data) {
+        public Node(T data) {
             this.data = data;
         }
     }
@@ -44,7 +44,7 @@ public class MyLinkedList<t> {
      *
      * @param copyFrom the linked list to copy from
      */
-    public MyLinkedList(MyLinkedList copyFrom){
+    public MyLinkedList(MyLinkedList<T> copyFrom){
         head = copyFrom.head;
         tail = copyFrom.tail;
         size = copyFrom.size;
@@ -55,8 +55,8 @@ public class MyLinkedList<t> {
      *
      * @param item the element to add
      */
-    public void add(t item) {
-        Node<t> newNode = new Node<>(item);
+    public void add(T item) {
+        Node<T> newNode = new Node<>(item);
 
         if(head == null) {
             head = newNode;
@@ -77,7 +77,7 @@ public class MyLinkedList<t> {
      * @param index the index at which to add the element
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    public void add(t item, int index) {
+    public void add(T item, int index) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
@@ -87,14 +87,14 @@ public class MyLinkedList<t> {
             return;
         }
 
-        Node<t> newNode = new Node<>(item);
+        Node<T> newNode = new Node<>(item);
 
         if (index == 0) {
             newNode.next = head;
             head.previous = newNode;
             head = newNode;
         } else {
-            Node<t> current = getNode(index);
+            Node<T> current = getNode(index);
             current.previous.next = newNode;
             newNode.previous = current.previous;
             newNode.next = current;
@@ -109,8 +109,8 @@ public class MyLinkedList<t> {
      *
      * @param item the element to remove
      */
-    public void remove(t item) {
-        Node<t> current = head;
+    public void remove(T item) {
+        Node<T> current = head;
         while (current != null) {
             if (current.data.equals(item)) {
                 if (current == head) {
@@ -146,7 +146,7 @@ public class MyLinkedList<t> {
         } else if (index == size - 1) {
             tail = tail.previous;
         } else {
-            Node<t> current = getNode(index);
+            Node<T> current = getNode(index);
             current.previous.next = current.next;
             current.next.previous = current.previous;
         }
@@ -173,10 +173,10 @@ public class MyLinkedList<t> {
         boolean swapped;
         do {
             swapped = false;
-            Node<t> current = head;
+            Node<T> current = head;
             while (current.next != null) {
                 if (compare(current.data, current.next.data) > 0) {
-                    t temp = current.data;
+                    T temp = current.data;
                     current.data = current.next.data;
                     current.next.data = temp;
                     swapped = true;
@@ -194,7 +194,7 @@ public class MyLinkedList<t> {
      * @return the element at the specified index
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    public t get(int index){
+    public T get(int index){
         return getNode(index).data;
     }
 
@@ -204,7 +204,7 @@ public class MyLinkedList<t> {
      * @return a string representation of the linked list
      */
     public String toString() {
-        Node<t> current = head;
+        Node<T> current = head;
         StringBuilder sb = new StringBuilder();
         while (current != null) {
             sb.append(current.data).append(" ");
@@ -221,7 +221,7 @@ public class MyLinkedList<t> {
      * @return a negative integer, zero, or a positive integer as the first element
      *         is less than, equal to, or greater than the second element
      */
-    private int compare(t elem1, t elem2) {
+    private int compare(T elem1, T elem2) {
         return Integer.compare(elem1.hashCode(), elem2.hashCode());
     }
 
@@ -232,12 +232,12 @@ public class MyLinkedList<t> {
      * @return the node at the specified index
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    private Node<t> getNode(int index) {
+    private Node<T> getNode(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
 
-        Node<t> current = head;
+        Node<T> current = head;
         for (int i = 0; i < index; i++) {
             current = current.next;
         }
